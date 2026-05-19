@@ -32,14 +32,15 @@
     * { box-sizing: border-box; }
 
     html {
-      overflow-x: hidden;
+      overflow-x: auto;
       scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
-      overflow-x: hidden;
+      min-width: 1200px;
+      overflow-x: visible;
       background:
         radial-gradient(circle at var(--smx) var(--smy), rgba(239, 68, 38, 0.18), transparent 22vw),
         linear-gradient(112deg, rgba(255, 250, 241, 0.92) 0 var(--sreveal), rgba(247, 243, 232, 0.64) var(--sreveal) 100%),
@@ -102,7 +103,7 @@
       top: 16px;
       left: 50%;
       z-index: 20;
-      width: min(1120px, calc(100% - 32px));
+      width: 1120px;
       transform: translateX(-50%);
       display: flex;
       align-items: center;
@@ -155,7 +156,7 @@
     }
 
     .section {
-      width: min(1160px, calc(100% - 40px));
+      width: 1160px;
       margin: 0 auto;
       padding: 76px 0;
     }
@@ -1286,141 +1287,21 @@
     }
 
     .footer {
-      width: min(1160px, calc(100% - 40px));
+      width: 1160px;
       margin: 0 auto;
       padding: 34px 0 64px;
       color: var(--muted);
       font-size: 13px;
     }
 
-    @media (max-width: 1020px) {
-      .hero, .split, .ar-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .outline-grid,
-      .virtual-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .virtual-discussion {
-        grid-template-columns: 1fr;
-      }
-
-      .discussion-flow {
-        grid-template-columns: 1fr;
-      }
-
-      .phone-row {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 720px) {
+    @media (max-width: 1199px) {
       .nav {
-        position: static;
-        width: calc(100% - 24px);
-        margin: 12px;
+        position: absolute;
+        left: 40px;
         transform: none;
-        align-items: flex-start;
-        flex-direction: column;
-        border-radius: 24px;
-      }
-
-      .links {
-        justify-content: flex-start;
-      }
-
-      .section {
-        width: min(100% - 26px, 1160px);
-        padding: 64px 0;
-      }
-
-      .hero {
-        min-height: auto;
-        padding-top: 18px;
-      }
-
-      .poster, .media-stage, .app-map, .archive-stage, .bubble-board {
-        min-height: 540px;
-        border-radius: 32px;
-      }
-
-      .poster-title {
-        right: 22px;
-        top: 120px;
-        font-size: 76px;
-      }
-
-      .poster-info {
-        left: 24px;
-        right: 24px;
-        bottom: 24px;
-        max-width: none;
-        font-size: 12px;
-        white-space: normal;
-      }
-
-      .definition,
-      .outline-grid,
-      .virtual-grid,
-      .virtual-discussion,
-      .phone-row {
-        grid-template-columns: 1fr;
-      }
-
-      .outline-grid {
-        display: grid;
-        min-height: auto;
-      }
-
-      .outline-item p {
-        max-height: none;
-        opacity: 1;
-        transform: none;
-      }
-
-      .media-main { inset: 34px 24px 180px 24px; }
-      .media-small { left: 24px; bottom: 36px; width: 42%; height: 180px; }
-      .media-note { right: 24px; bottom: 36px; width: 48%; min-height: 180px; padding: 18px; }
-
-      .app-node {
-        width: 150px;
-      }
-
-      .archive-image {
-        position: relative;
-        inset: auto;
-        width: auto;
-        height: 220px;
-        margin: 18px;
-      }
-
-      .archive-stage {
-        height: auto;
-        padding: 12px 0 230px;
-      }
-
-      .archive-story-panel {
-        position: relative;
-        inset: auto;
-        width: auto;
-        margin: 18px;
-      }
-
-      .archive-bubble {
-        left: 18px;
-        right: 18px;
-        max-width: none;
-      }
-
-      .bubble-top { top: auto; bottom: 118px; }
-      .bubble-bottom { bottom: 22px; }
-
-      .bubble-board .phone-shot {
-        width: min(260px, 78%);
       }
     }
+
   </style>
 </head>
 <body>
