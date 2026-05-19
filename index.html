@@ -1,0 +1,2267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Give & Get | Future Tin Sheds Gallery</title>
+  <style>
+    :root {
+      --paper: #f7f3e8;
+      --cream: #fffaf1;
+      --ink: #111111;
+      --muted: #675f55;
+      --red: #ef4426;
+      --red-dark: #9b2b20;
+      --brown: #7f2e20;
+      --blue: #4f6f8f;
+      --sage: #72806a;
+      --gold: #c28a35;
+      --glass: rgba(255, 250, 241, 0.56);
+      --glass-soft: rgba(255, 250, 241, 0.34);
+      --shadow: rgba(84, 50, 20, 0.16) 0 28px 80px;
+      --serif: Georgia, "Times New Roman", Times, serif;
+      --sans: Inter, "Helvetica Neue", Arial, "Hiragino Sans", "Microsoft YaHei", sans-serif;
+      --mx: 50vw;
+      --my: 36vh;
+      --smx: 50vw;
+      --smy: 36vh;
+      --reveal: 50%;
+      --sreveal: 50%;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at var(--smx) var(--smy), rgba(239, 68, 38, 0.18), transparent 22vw),
+        linear-gradient(112deg, rgba(255, 250, 241, 0.92) 0 var(--sreveal), rgba(247, 243, 232, 0.64) var(--sreveal) 100%),
+        var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.5;
+      letter-spacing: 0;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(rgba(247, 243, 232, 0.4), rgba(247, 243, 232, 0.44)),
+        url("https://www.sydney.edu.au/content/dam/art-and-culture/galleries/_48a7704.jpg") center / cover no-repeat;
+      filter: blur(9px) saturate(1.12);
+      opacity: 0.9;
+      transform: scale(1.035);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: linear-gradient(90deg, rgba(17, 17, 17, 0.025) 1px, transparent 1px);
+      background-size: 132px 100%;
+      background-color: rgba(247, 243, 232, 0.12);
+      backdrop-filter: blur(1px);
+      mask-image: radial-gradient(circle at var(--smx) var(--smy), rgba(0,0,0,.2) 0 17vw, black 32vw, rgba(0,0,0,.75) 60vw);
+      pointer-events: none;
+    }
+
+    .paint-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 18;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: .82;
+      mix-blend-mode: normal;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button, input, textarea, select { font: inherit; }
+
+    .nav {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      z-index: 20;
+      width: min(1120px, calc(100% - 32px));
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: rgba(255, 250, 241, 0.76);
+      box-shadow: rgba(84, 50, 20, 0.12) 0 18px 52px;
+      backdrop-filter: blur(24px) saturate(1.25);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+      font-family: var(--serif);
+      font-weight: 800;
+    }
+
+    .brand::before {
+      content: "";
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+
+    .links a {
+      padding: 9px 11px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .links a:hover,
+    .links a.active {
+      background: rgba(239, 68, 38, 0.1);
+      color: var(--red-dark);
+    }
+
+    .section {
+      width: min(1160px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 76px 0;
+    }
+
+    .hero {
+      min-height: 82vh;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(390px, 1fr);
+      gap: 44px;
+      align-items: stretch;
+      padding-top: 126px;
+    }
+
+    .hero > .panel,
+    .hero > .poster {
+      min-height: 540px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 16px;
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      margin-bottom: 20px;
+      color: var(--red);
+      font-family: var(--serif);
+      font-size: clamp(52px, 7.4vw, 88px);
+      font-style: italic;
+      line-height: 0.86;
+      letter-spacing: 0.015em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin-bottom: 18px;
+      font-family: var(--serif);
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 0.98;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-family: var(--serif);
+      font-size: 25px;
+      line-height: 1.02;
+    }
+
+    p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .lead {
+      max-width: 660px;
+      color: #2b241d;
+      font-size: 21px;
+    }
+
+    .glass,
+    .panel {
+      background: var(--glass);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px) saturate(1.18);
+    }
+
+    .panel {
+      border-radius: 34px;
+      padding: 26px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--cream);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .btn.secondary {
+      background: rgba(255, 250, 241, 0.64);
+      color: var(--ink);
+      box-shadow: inset 0 0 0 1px rgba(17, 17, 17, 0.1);
+      backdrop-filter: blur(16px);
+    }
+
+    .poster {
+      position: relative;
+      min-height: 540px;
+      overflow: hidden;
+      border-radius: 46px;
+      background: rgba(255, 250, 241, 0.44);
+    }
+
+    .culture-board {
+      position: absolute;
+      inset: 30px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .culture-card {
+      position: absolute;
+      overflow: hidden;
+      border-radius: 28px;
+      background: rgba(255, 250, 241, 0.5);
+      box-shadow: rgba(84, 50, 20, 0.14) 0 18px 44px;
+      opacity: 0.5;
+      filter: blur(.8px) saturate(.9);
+      transform: translateX(calc((var(--smx) - 50vw) * var(--slide, .012)));
+      transition: opacity 260ms ease, filter 260ms ease, transform 260ms ease;
+    }
+
+    .poster:hover .culture-card {
+      opacity: 0.88;
+      filter: blur(0) saturate(1.05);
+    }
+
+    .culture-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .culture-a { left: 4%; top: 8%; width: 31%; height: 28%; --slide: -.015; }
+    .culture-b { right: 6%; top: 9%; width: 34%; height: 25%; --slide: .018; }
+    .culture-c { left: 18%; bottom: 8%; width: 38%; height: 27%; --slide: .01; }
+    .culture-d { right: 8%; bottom: 16%; width: 29%; height: 25%; --slide: -.012; }
+    .culture-e { left: 8%; top: 42%; width: 24%; height: 23%; --slide: .014; }
+    .culture-f { right: 34%; top: 38%; width: 24%; height: 22%; --slide: -.01; }
+    .culture-g { right: 8%; top: 42%; width: 22%; height: 21%; --slide: .012; }
+    .culture-h { left: 56%; bottom: 5%; width: 19%; height: 18%; --slide: -.016; }
+
+    .poster::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(90deg, rgba(92, 73, 255, 0.28) 1px, transparent 1px),
+        linear-gradient(rgba(17, 17, 17, 0.06) 1px, transparent 1px);
+      background-size: 86px 100%, 100% 42px;
+      opacity: 0.36;
+    }
+
+    .poster-hand {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      object-fit: cover;
+      mix-blend-mode: multiply;
+      filter: blur(.85px) saturate(1.04) contrast(.98);
+      transform: translate(calc((var(--smx) - 50vw) * -0.018), calc((var(--smy) - 50vh) * -0.018));
+    }
+
+    .poster-thread {
+      position: absolute;
+      inset: 8% 10%;
+      border-radius: 50%;
+      border: 4px solid rgba(239, 68, 38, 0.18);
+      border-left-color: rgba(239, 68, 38, 0.8);
+      transform: rotate(calc((var(--smx) - 50vw) * 0.02deg));
+      z-index: 1;
+    }
+
+    .poster-info {
+      position: absolute;
+      right: 20px;
+      bottom: 26px;
+      left: 42%;
+      max-width: calc(58% - 36px);
+      padding: 12px 18px;
+      border-radius: 18px;
+      background: rgba(255, 250, 241, 0.54);
+      backdrop-filter: blur(10px);
+      color: var(--red);
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.2;
+      text-transform: uppercase;
+      white-space: nowrap;
+      z-index: 3;
+    }
+
+    .definition {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .definition-item {
+      min-height: 112px;
+      padding: 18px;
+      border-radius: 30px;
+      background: rgba(255, 250, 241, 0.68);
+      box-shadow: rgba(84, 50, 20, 0.08) 0 16px 40px;
+      transition: transform 240ms ease, background 240ms ease, box-shadow 240ms ease;
+    }
+
+    .definition-item:hover {
+      transform: translateY(-8px) scale(1.025);
+      background: linear-gradient(135deg, rgba(255, 250, 241, 0.9), rgba(239, 68, 38, 0.12));
+      box-shadow: rgba(239, 68, 38, 0.22) 0 0 38px, rgba(84, 50, 20, 0.12) 0 18px 44px;
+    }
+
+    .definition-item strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--red);
+      font-family: var(--serif);
+      font-size: 28px;
+      font-style: italic;
+    }
+
+    .quote {
+      margin-top: 18px;
+      padding-left: 18px;
+      border-left: 4px solid var(--red);
+      color: #332a23;
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.86fr) minmax(0, 1.14fr);
+      gap: 30px;
+      align-items: stretch;
+    }
+
+    .everyone-split {
+      grid-template-columns: minmax(460px, 1.28fr) minmax(260px, 0.72fr);
+      align-items: stretch;
+    }
+
+    .media-stage {
+      position: relative;
+      min-height: 620px;
+      overflow: hidden;
+      border-radius: 44px;
+    }
+
+    .media-block {
+      position: absolute;
+      overflow: hidden;
+      border-radius: 34px;
+      background: rgba(255, 250, 241, 0.58);
+      box-shadow: rgba(84, 50, 20, 0.16) 0 22px 58px;
+      transform: translate(calc((var(--smx) - 50vw) * var(--dx, .01)), calc((var(--smy) - 50vh) * var(--dy, .01)));
+      transition: transform 80ms linear;
+    }
+
+    .media-block img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .media-main { inset: 42px 42px 180px 98px; --dx: .012; --dy: .01; }
+    .media-small { left: 34px; bottom: 44px; width: 44%; height: 250px; --dx: -.014; --dy: -.008; }
+    .media-note {
+      right: 34px;
+      bottom: 40px;
+      width: 44%;
+      min-height: 240px;
+      padding: 24px;
+      --dx: -.01;
+      --dy: .014;
+    }
+
+    .media-note p { margin-bottom: 0; }
+
+    .outline-grid {
+      display: flex;
+      gap: 14px;
+      margin-top: 24px;
+      min-height: 230px;
+    }
+
+    .outline-item {
+      flex: 1 1 0;
+      min-height: 160px;
+      padding: 18px;
+      border-radius: 30px;
+      background: rgba(255, 250, 241, 0.58);
+      box-shadow: rgba(84, 50, 20, 0.08) 0 16px 40px;
+      overflow: hidden;
+      transition: flex 420ms cubic-bezier(.2,.8,.2,1), background 320ms ease, transform 320ms ease, filter 320ms ease;
+    }
+
+    .outline-grid:hover .outline-item {
+      flex: 0.5 1 0;
+      filter: saturate(.82);
+    }
+
+    .outline-grid .outline-item:hover {
+      flex: 2.7 1 0;
+      background: rgba(255, 250, 241, 0.82);
+      transform: translateY(-6px);
+    }
+
+    .outline-item span {
+      display: block;
+      margin-bottom: 14px;
+      color: var(--red);
+      font-weight: 900;
+    }
+
+    .outline-item p {
+      max-height: 0;
+      margin: 0;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: max-height 260ms ease, opacity 220ms ease, transform 220ms ease;
+    }
+
+    .outline-item:hover p {
+      max-height: 160px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .app-map {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      min-height: 100%;
+      overflow: hidden;
+      border-radius: 44px;
+      padding: 20px;
+      align-content: stretch;
+      grid-auto-rows: minmax(158px, 1fr);
+    }
+
+    .app-node {
+      position: relative;
+      width: auto;
+      min-height: 0;
+      padding: 16px;
+      border-radius: 32px;
+      background: rgba(255, 250, 241, 0.66);
+      box-shadow: rgba(84, 50, 20, 0.14) 0 18px 48px;
+      backdrop-filter: blur(22px);
+      cursor: pointer;
+      transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease;
+    }
+
+    .visual-node {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .visual-node:nth-child(5) {
+      grid-column: 1 / -1;
+      min-height: 124px;
+    }
+
+    .visual-node img {
+      width: 100%;
+      height: 76px;
+      object-fit: cover;
+      filter: saturate(.9);
+    }
+
+    .visual-node b,
+    .visual-node p {
+      padding-inline: 14px;
+    }
+
+    .visual-node b {
+      padding-top: 10px;
+    }
+
+    .visual-node p {
+      padding-bottom: 14px;
+    }
+
+    .app-node:hover {
+      transform: translateY(-8px) scale(1.04);
+      background: rgba(255, 250, 241, 0.86);
+    }
+
+    .app-node.app-front {
+      z-index: 20;
+      transform: translateY(-10px) scale(1.08);
+      background: rgba(255, 250, 241, 0.94);
+      box-shadow: rgba(239, 68, 38, 0.24) 0 0 42px, rgba(84, 50, 20, 0.2) 0 24px 68px;
+    }
+
+    .app-node b {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--red-dark);
+      font-family: var(--serif);
+      font-size: 23px;
+    }
+
+    .app-node p {
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .app-map::before {
+      content: "";
+      position: absolute;
+      inset: 56px;
+      border-radius: 50%;
+      border: 2px solid rgba(239, 68, 38, 0.18);
+      transform: rotate(calc((var(--smx) - 50vw) * 0.018deg));
+      pointer-events: none;
+    }
+
+    .form-area {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+      padding: 22px;
+      border-radius: 28px;
+      background: rgba(255, 250, 241, 0.52);
+      backdrop-filter: blur(18px);
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      border: 0;
+      border-radius: 18px;
+      background: rgba(255, 250, 241, 0.72);
+      color: var(--ink);
+      outline: 0;
+      padding: 13px 14px;
+      box-shadow: inset 0 0 0 1px rgba(17, 17, 17, 0.1);
+    }
+
+    textarea {
+      min-height: 118px;
+      resize: vertical;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      box-shadow: inset 0 0 0 2px var(--red), 0 0 0 4px rgba(239, 68, 38, 0.12);
+    }
+
+    .phone-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      align-items: start;
+    }
+
+    .phone-row.ar-screens {
+      grid-template-columns: 1.14fr 1fr 1fr;
+      align-items: center;
+    }
+
+    .phone-row.ar-screens .phone-shot:nth-child(1) {
+      transform: scale(1.06);
+    }
+
+    .phone-row.ar-screens .phone-shot:nth-child(2),
+    .phone-row.ar-screens .phone-shot:nth-child(3) {
+      transform: translateY(24px);
+    }
+
+    .phone-shot {
+      overflow: hidden;
+      border-radius: 42px;
+      background: rgba(255, 250, 241, 0.58);
+      box-shadow: rgba(17, 17, 17, 0.18) 0 24px 60px;
+      backdrop-filter: blur(20px);
+      transition: transform 220ms ease, box-shadow 220ms ease;
+    }
+
+    .phone-shot:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: rgba(239, 68, 38, 0.2) 0 28px 72px;
+    }
+
+    .phone-shot img {
+      width: 100%;
+      height: auto;
+    }
+
+    .ar-layout {
+      display: grid;
+      grid-template-columns: minmax(270px, 0.72fr) minmax(0, 1.28fr);
+      gap: 30px;
+      align-items: center;
+    }
+
+    .archive-stage {
+      position: relative;
+      min-height: 760px;
+      overflow: hidden;
+      border-radius: 44px;
+    }
+
+    .archive-stage .archive-story,
+    .archive-stage .archive-image,
+    .archive-stage .archive-bubble,
+    .archive-stage .archive-focus {
+      cursor: pointer;
+    }
+
+    .archive-front {
+      z-index: 35 !important;
+      filter: blur(0) saturate(1.08) !important;
+      opacity: 1 !important;
+      transform: translateY(-10px) scale(1.045) !important;
+      box-shadow: rgba(239, 68, 38, 0.28) 0 0 46px, rgba(84, 50, 20, 0.22) 0 26px 76px !important;
+    }
+
+    .archive-example {
+      margin: 22px 0 0;
+      overflow: hidden;
+      border-radius: 24px;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .archive-example img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: transform 280ms ease, filter 280ms ease;
+    }
+
+    .archive-example:hover img {
+      transform: scale(1.065);
+      filter: saturate(1.12) contrast(1.04);
+    }
+
+    .archive-example figcaption {
+      padding: 12px 4px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .archive-story-panel {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      z-index: 7;
+      width: min(380px, calc(100% - 48px));
+      display: grid;
+      gap: 10px;
+    }
+
+    .archive-story {
+      padding: 16px 18px;
+      border-radius: 26px;
+      background: rgba(255, 250, 241, 0.76);
+      box-shadow: rgba(84, 50, 20, 0.12) 0 14px 42px;
+      backdrop-filter: blur(18px) saturate(1.16);
+      transition: transform 240ms ease, box-shadow 240ms ease, background 240ms ease;
+    }
+
+    .archive-story:hover {
+      transform: translateX(-6px) scale(1.02);
+      background: rgba(255, 250, 241, 0.9);
+      box-shadow: rgba(239, 68, 38, 0.18) 0 0 34px, rgba(84, 50, 20, 0.16) 0 18px 50px;
+    }
+
+    .archive-story b {
+      display: block;
+      color: var(--red-dark);
+      font-family: var(--serif);
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .archive-story small {
+      display: block;
+      margin: 6px 0 8px;
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .archive-story p {
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .archive-focus {
+      position: absolute;
+      left: 44px;
+      bottom: 44px;
+      z-index: 5;
+      width: 310px;
+      min-height: 190px;
+      padding: 22px;
+      border-radius: 34px;
+      background: rgba(255, 250, 241, 0.78);
+      box-shadow: rgba(84, 50, 20, 0.16) 0 18px 50px;
+      backdrop-filter: blur(24px);
+      transition: transform 260ms ease, box-shadow 260ms ease;
+    }
+
+    .archive-focus:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: rgba(239, 68, 38, 0.2) 0 26px 70px;
+    }
+
+    .archive-focus img {
+      width: 100%;
+      height: 96px;
+      object-fit: cover;
+      border-radius: 22px;
+      margin-bottom: 14px;
+    }
+
+    .archive-image,
+    .archive-bubble {
+      transition: transform 260ms ease, filter 260ms ease, opacity 260ms ease;
+    }
+
+    .archive-stage:hover .archive-image {
+      filter: blur(2px) saturate(.82);
+      opacity: .72;
+    }
+
+    .archive-stage .archive-image:hover,
+    .archive-stage .archive-bubble:hover {
+      filter: blur(0) saturate(1.05);
+      opacity: 1;
+      transform: translateY(-8px) scale(1.03);
+    }
+
+    .archive-image {
+      position: absolute;
+      overflow: hidden;
+      border-radius: 34px;
+      background: rgba(255, 250, 241, 0.56);
+      box-shadow: rgba(84, 50, 20, 0.16) 0 22px 58px;
+    }
+
+    .archive-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .arch-a { left: 38px; top: 54px; width: 42%; height: 300px; }
+    .arch-b { right: 64px; top: 300px; width: 36%; height: 230px; }
+    .arch-c { left: 18%; bottom: 58px; width: 54%; height: 300px; }
+    .arch-d { left: 50px; top: 398px; width: 28%; height: 190px; }
+    .arch-e { right: 38px; bottom: 260px; width: 30%; height: 150px; }
+
+    .archive-bubble {
+      position: absolute;
+      z-index: 4;
+      max-width: 270px;
+      padding: 20px;
+      border-radius: 30px;
+      background: rgba(255, 250, 241, 0.74);
+      box-shadow: rgba(84, 50, 20, 0.14) 0 18px 46px;
+      backdrop-filter: blur(26px) saturate(1.2);
+    }
+
+    .archive-bubble b {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--red-dark);
+      font-family: var(--serif);
+      font-size: 25px;
+    }
+
+    .archive-bubble p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .bubble-top { left: 42%; top: 250px; }
+    .bubble-bottom { right: 54px; bottom: 112px; }
+    .archive-bubble.bubble-bottom {
+      z-index: 12;
+      background: rgba(255, 250, 241, 0.9);
+      box-shadow: rgba(239, 68, 38, 0.28) 0 0 42px, rgba(84, 50, 20, 0.18) 0 22px 58px;
+    }
+
+    .virtual-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .virtual-step {
+      --glow: rgba(239, 68, 38, 0.18);
+      min-height: 180px;
+      padding: 20px;
+      border-radius: 30px;
+      background: rgba(255, 250, 241, 0.62);
+      box-shadow: var(--glow) 0 0 24px, rgba(84, 50, 20, 0.08) 0 16px 40px;
+      transition: transform 220ms ease, background 220ms ease;
+      overflow: hidden;
+    }
+
+    .virtual-step:nth-child(2) { --glow: rgba(194, 138, 53, 0.2); }
+    .virtual-step:nth-child(3) { --glow: rgba(79, 111, 143, 0.2); }
+    .virtual-step:nth-child(4) { --glow: rgba(114, 128, 106, 0.2); }
+    .virtual-step:nth-child(5) { --glow: rgba(155, 43, 32, 0.2); }
+
+    .virtual-step:hover {
+      transform: translateY(-8px);
+      background: rgba(255, 250, 241, 0.9);
+      box-shadow: var(--glow) 0 0 46px, rgba(84, 50, 20, 0.16) 0 24px 60px;
+    }
+
+    .virtual-step p {
+      max-height: 56px;
+      transition: max-height 240ms ease;
+    }
+
+    .virtual-step:hover p {
+      max-height: 180px;
+    }
+
+    .virtual-step b {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--red-dark);
+      font-family: var(--serif);
+      font-size: 24px;
+    }
+
+    .virtual-discussion {
+      display: grid;
+      grid-template-columns: minmax(360px, .86fr) minmax(0, 1.22fr);
+      gap: 24px;
+      margin-top: 24px;
+      padding: 26px;
+      min-height: 590px;
+      border-radius: 30px;
+      background: rgba(255, 250, 241, 0.5);
+      box-shadow: rgba(79, 111, 143, 0.16) 0 0 34px, rgba(84, 50, 20, 0.08) 0 18px 44px;
+      backdrop-filter: blur(18px) saturate(1.12);
+    }
+
+    .discussion-form {
+      display: grid;
+      align-content: start;
+      gap: 16px;
+    }
+
+    .discussion-flow {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      align-items: end;
+    }
+
+    .discussion-flow label:nth-child(3) {
+      grid-column: 1 / 2;
+    }
+
+    .visitor-compose {
+      display: grid;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 22px;
+      background: rgba(255, 250, 241, 0.58);
+      box-shadow: inset rgba(17, 17, 17, 0.08) 0 0 0 1px;
+    }
+
+    .visitor-compose img {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: rgba(239, 68, 38, 0.18) 0 0 0 4px;
+    }
+
+    .visitor-fields {
+      display: grid;
+      gap: 10px;
+    }
+
+    .visitor-compose label {
+      text-transform: none;
+      font-weight: 800;
+    }
+
+    .visitor-compose textarea {
+      min-height: 148px;
+    }
+
+    .discussion-preview {
+      position: relative;
+      min-height: 510px;
+      overflow: hidden;
+      border-radius: 26px;
+      background:
+        linear-gradient(rgba(255, 250, 241, 0.56), rgba(255, 250, 241, 0.72)),
+        url("https://www.sydney.edu.au/content/dam/art-and-culture/galleries/_48a7704.jpg") center / cover;
+      box-shadow: inset rgba(255, 250, 241, 0.5) 0 0 0 1px;
+    }
+
+    .discussion-preview::before {
+      content: attr(data-work);
+      position: absolute;
+      left: 18px;
+      top: 16px;
+      color: var(--red);
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 900;
+      max-width: 78%;
+    }
+
+    .discussion-cards {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: 62px;
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 0 0 12px;
+      scrollbar-width: none;
+      scroll-behavior: auto;
+      cursor: grab;
+      user-select: none;
+      touch-action: pan-y;
+    }
+
+    .discussion-cards::-webkit-scrollbar {
+      display: none;
+    }
+
+    .discussion-cards.is-dragging {
+      cursor: grabbing;
+      scroll-snap-type: none;
+    }
+
+    .discussion-card {
+      flex: 0 0 min(74%, 330px);
+      min-height: 154px;
+      overflow: hidden;
+      scroll-snap-align: start;
+      border-radius: 24px;
+      background: rgba(255, 250, 241, 0.74);
+      box-shadow: rgba(84, 50, 20, 0.16) 0 16px 44px;
+      transition: transform 220ms ease, box-shadow 220ms ease;
+    }
+
+    .discussion-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: rgba(239, 68, 38, 0.22) 0 0 34px, rgba(84, 50, 20, 0.16) 0 20px 52px;
+    }
+
+    .discussion-card img {
+      width: 100%;
+      height: 104px;
+      object-fit: cover;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .discussion-card b,
+    .discussion-card span {
+      display: block;
+      padding-inline: 12px;
+    }
+
+    .discussion-card b {
+      padding-top: 9px;
+      color: var(--red-dark);
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .discussion-card span {
+      padding-bottom: 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .discussion-note {
+      position: absolute;
+      max-width: 260px;
+      padding: 14px 16px 14px 58px;
+      border-radius: 24px;
+      background: rgba(255, 250, 241, 0.82);
+      box-shadow: rgba(84, 50, 20, 0.12) 0 16px 38px;
+      backdrop-filter: blur(16px);
+      color: var(--muted);
+      font-size: 13px;
+      transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease;
+    }
+
+    .discussion-note:hover,
+    .discussion-note.is-front {
+      transform: translateY(-6px) scale(1.035);
+      background: rgba(255, 250, 241, 0.94);
+      box-shadow: rgba(239, 68, 38, 0.18) 0 0 34px, rgba(84, 50, 20, 0.16) 0 18px 46px;
+    }
+
+    .discussion-note img {
+      position: absolute;
+      left: 12px;
+      top: 14px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 0 3px rgba(239, 68, 38, 0.12);
+    }
+
+    .discussion-note b {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--red-dark);
+      font-family: var(--serif);
+      font-size: 19px;
+    }
+
+    .discussion-note p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .discussion-note.note-1 { left: 6%; top: 51%; }
+    .discussion-note.note-2 { right: 6%; top: 58%; }
+    .discussion-note.note-3 { left: 25%; bottom: 5%; }
+    .discussion-note.note-4 { left: 9%; bottom: 5%; }
+    .discussion-note.note-5 { right: 19%; bottom: 4%; }
+    .discussion-note.note-6 { right: 6%; top: 42%; }
+
+    .discussion-note.positioned {
+      left: var(--note-left);
+      top: var(--note-top);
+      right: auto;
+      bottom: auto;
+    }
+
+    .bubble-board {
+      position: relative;
+      min-height: 620px;
+      overflow: hidden;
+      border-radius: 44px;
+    }
+
+    .bubble-example-image {
+      margin-top: 22px;
+      overflow: hidden;
+      border-radius: 28px;
+      box-shadow: rgba(84, 50, 20, 0.12) 0 18px 44px;
+    }
+
+    .bubble-example-image img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      transition: transform 260ms ease, filter 260ms ease;
+    }
+
+    .bubble-example-image:hover img {
+      transform: scale(1.06);
+      filter: saturate(1.08);
+    }
+
+    .bubble-board .phone-shot {
+      position: absolute;
+      left: 50%;
+      top: 48%;
+      width: min(320px, 46%);
+      height: 520px;
+      transform: translate(-50%, -50%);
+    }
+
+    .bubble-board .phone-shot img {
+      height: 100%;
+      object-fit: cover;
+      object-position: center bottom;
+    }
+
+    .comment-chip {
+      --chip-bg: rgba(255, 250, 241, 0.76);
+      --chip-glow: rgba(239, 68, 38, 0.22);
+      position: absolute;
+      z-index: 4;
+      max-width: 230px;
+      padding: 14px 16px 14px 58px;
+      border-radius: 30px;
+      background: var(--chip-bg);
+      box-shadow: var(--chip-glow) 0 0 22px, rgba(84, 50, 20, 0.12) 0 18px 42px;
+      backdrop-filter: blur(24px);
+      cursor: pointer;
+      transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease, z-index 0ms linear;
+    }
+
+    .comment-chip:hover {
+      transform: translateY(-8px) scale(1.05);
+      background: rgba(255, 250, 241, 0.94);
+      box-shadow: var(--chip-glow) 0 0 42px, rgba(84, 50, 20, 0.14) 0 18px 42px;
+    }
+
+    .comment-chip.is-front {
+      z-index: 30;
+      transform: translateY(-10px) scale(1.08);
+      background: rgba(255, 250, 241, 0.96);
+      box-shadow: var(--chip-glow) 0 0 54px, rgba(84, 50, 20, 0.2) 0 24px 64px;
+    }
+
+    .comment-chip img {
+      position: absolute;
+      left: 12px;
+      top: 14px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 0 3px rgba(239, 68, 38, 0.14);
+    }
+
+    .comment-chip b {
+      color: var(--red-dark);
+      font-family: var(--serif);
+      font-size: 21px;
+    }
+
+    .comment-chip p {
+      margin: 2px 0 0;
+      font-size: 13px;
+    }
+
+    .chip-1 { left: 7%; top: 15%; }
+    .chip-2 { right: 6%; top: 17%; }
+    .chip-3 { left: 34%; top: 60%; }
+    .chip-4 { right: 8%; bottom: 12%; }
+
+    .chip-5 { left: 7%; top: 42%; }
+    .chip-6 { right: 6%; top: 42%; }
+    .chip-7 { left: 35%; top: 9%; }
+    .chip-8 { right: 18%; top: 66%; }
+    .chip-9 { left: 5%; top: 66%; }
+    .chip-10 { left: 34%; bottom: 7%; }
+
+    .chip-1 { --chip-bg: rgba(255, 235, 228, 0.78); --chip-glow: rgba(239, 68, 38, 0.28); max-width: 250px; }
+    .chip-2 { --chip-bg: rgba(239, 244, 255, 0.78); --chip-glow: rgba(79, 111, 143, 0.3); max-width: 280px; }
+    .chip-3 { --chip-bg: rgba(246, 241, 224, 0.8); --chip-glow: rgba(194, 138, 53, 0.28); max-width: 220px; }
+    .chip-4 { --chip-bg: rgba(238, 246, 232, 0.78); --chip-glow: rgba(114, 128, 106, 0.28); max-width: 245px; }
+    .chip-5 { --chip-bg: rgba(255, 244, 238, 0.78); --chip-glow: rgba(155, 43, 32, 0.25); max-width: 270px; }
+    .chip-6 { --chip-bg: rgba(242, 241, 255, 0.78); --chip-glow: rgba(79, 111, 143, 0.24); max-width: 210px; }
+    .chip-7 { --chip-bg: rgba(255, 249, 222, 0.8); --chip-glow: rgba(194, 138, 53, 0.32); max-width: 190px; }
+    .chip-8 { --chip-bg: rgba(232, 246, 248, 0.8); --chip-glow: rgba(79, 111, 143, 0.3); max-width: 230px; }
+    .chip-9 { --chip-bg: rgba(255, 237, 232, 0.78); --chip-glow: rgba(239, 68, 38, 0.26); max-width: 180px; }
+    .chip-10 { --chip-bg: rgba(244, 247, 236, 0.8); --chip-glow: rgba(114, 128, 106, 0.3); max-width: 220px; }
+
+    .reflection {
+      max-width: none;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 22px;
+      padding: 14px 20px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--ink), var(--red-dark));
+      color: var(--cream);
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow: rgba(239, 68, 38, 0.24) 0 0 28px, rgba(84, 50, 20, 0.14) 0 18px 42px;
+      transition: transform 220ms ease, box-shadow 220ms ease, gap 220ms ease;
+    }
+
+    .cta:hover {
+      gap: 18px;
+      transform: translateY(-4px) scale(1.035);
+      box-shadow: rgba(239, 68, 38, 0.36) 0 0 44px, rgba(84, 50, 20, 0.18) 0 24px 62px;
+    }
+
+    .footer {
+      width: min(1160px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 34px 0 64px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 1020px) {
+      .hero, .split, .ar-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .outline-grid,
+      .virtual-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .virtual-discussion {
+        grid-template-columns: 1fr;
+      }
+
+      .discussion-flow {
+        grid-template-columns: 1fr;
+      }
+
+      .phone-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav {
+        position: static;
+        width: calc(100% - 24px);
+        margin: 12px;
+        transform: none;
+        align-items: flex-start;
+        flex-direction: column;
+        border-radius: 24px;
+      }
+
+      .links {
+        justify-content: flex-start;
+      }
+
+      .section {
+        width: min(100% - 26px, 1160px);
+        padding: 64px 0;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 18px;
+      }
+
+      .poster, .media-stage, .app-map, .archive-stage, .bubble-board {
+        min-height: 540px;
+        border-radius: 32px;
+      }
+
+      .poster-title {
+        right: 22px;
+        top: 120px;
+        font-size: 76px;
+      }
+
+      .poster-info {
+        left: 24px;
+        right: 24px;
+        bottom: 24px;
+        max-width: none;
+        font-size: 12px;
+        white-space: normal;
+      }
+
+      .definition,
+      .outline-grid,
+      .virtual-grid,
+      .virtual-discussion,
+      .phone-row {
+        grid-template-columns: 1fr;
+      }
+
+      .outline-grid {
+        display: grid;
+        min-height: auto;
+      }
+
+      .outline-item p {
+        max-height: none;
+        opacity: 1;
+        transform: none;
+      }
+
+      .media-main { inset: 34px 24px 180px 24px; }
+      .media-small { left: 24px; bottom: 36px; width: 42%; height: 180px; }
+      .media-note { right: 24px; bottom: 36px; width: 48%; min-height: 180px; padding: 18px; }
+
+      .app-node {
+        width: 150px;
+      }
+
+      .archive-image {
+        position: relative;
+        inset: auto;
+        width: auto;
+        height: 220px;
+        margin: 18px;
+      }
+
+      .archive-stage {
+        height: auto;
+        padding: 12px 0 230px;
+      }
+
+      .archive-story-panel {
+        position: relative;
+        inset: auto;
+        width: auto;
+        margin: 18px;
+      }
+
+      .archive-bubble {
+        left: 18px;
+        right: 18px;
+        max-width: none;
+      }
+
+      .bubble-top { top: auto; bottom: 118px; }
+      .bubble-bottom { bottom: 22px; }
+
+      .bubble-board .phone-shot {
+        width: min(260px, 78%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas class="paint-canvas" id="paintCanvas" aria-hidden="true"></canvas>
+  <header class="nav">
+    <a class="brand" href="#top">Give & Get / Future TSG</a>
+    <nav class="links" aria-label="Project sections">
+      <a class="active" href="#definition">Definition</a>
+      <a href="#brief">Brief</a>
+      <a href="#everyone">TSG For Everyone</a>
+      <a href="#archive">Archive</a>
+      <a href="#virtual">Virtual TSG</a>
+      <a href="#bubble">Bubble</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="section hero" id="definition">
+      <div class="panel">
+        <span class="eyebrow">Definition</span>
+        <h1>Give<br>And<br>Get</h1>
+        <p class="lead">
+          Give & Get offers visitors a distinctive way to engage with Tin Sheds Gallery:
+          contribute their own cultural essence, then take away new cultural perspectives.
+        </p>
+        <div class="definition">
+          <div class="definition-item">
+            <strong>Give</strong>
+            <p>Visitors bring a culturally significant item, reusable material, or story to TSG.</p>
+          </div>
+          <div class="definition-item">
+            <strong>Get</strong>
+            <p>Visitors select an item, story, or perspective from other Givers to take home.</p>
+          </div>
+        </div>
+        <div class="quote">
+          Everyone contributes their own cultural essence as a Giver and, in return, takes away new cultural perspectives.
+        </div>
+        <div class="actions">
+          <a class="btn" href="#everyone">Explore Website Service</a>
+          <a class="btn secondary" href="#archive">View Archive</a>
+        </div>
+      </div>
+
+      <div class="poster glass" aria-label="Give and Get poster style">
+        <div class="culture-board" aria-hidden="true">
+          <div class="culture-card culture-a"><img src="https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/tea,-time---tim-tams/website_hk.jpg" alt=""></div>
+          <div class="culture-card culture-b"><img src="https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/120bpm/3.jpg" alt=""></div>
+          <div class="culture-card culture-c"><img src="https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/pressure/tinsheds-photo---pressure-banner---cropped.jpg" alt=""></div>
+          <div class="culture-card culture-d"><img src="https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/pica-erased/pica-erased-web-banner-2.jpg" alt=""></div>
+          <div class="culture-card culture-e"><img src="https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/spectral-dialogues/banner-image_1.jpg" alt=""></div>
+          <div class="culture-card culture-f"><img src="https://www.sydney.edu.au/content/dam/art-and-culture/galleries/-2022-03-03-at-12.36.40-pm.jpeg" alt=""></div>
+          <div class="culture-card culture-g"><img src="https://www.sydney.edu.au/content/dam/art-and-culture/galleries/_48a7704.jpg" alt=""></div>
+          <div class="culture-card culture-h"><img src="https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2024-program/garden/1.jpg" alt=""></div>
+        </div>
+        <div class="poster-thread"></div>
+        <img class="poster-hand" src="assets/hands-touch.png" alt="Two hands touching through a red thread">
+        <div class="poster-info">Exchange items<br>Exchange cultures<br>Sign up @Tinshedsgallery</div>
+      </div>
+    </section>
+
+    <section class="section split" id="brief">
+      <div class="panel">
+        <span class="eyebrow">Introduction brief</span>
+        <h2>Cultural diversity & sustainability</h2>
+        <p>
+          The future TSG is designed around two major focuses: cultural diversity and sustainability.
+          It starts from Australia's Aboriginal culture and expands into a participatory method that encourages
+          visitors to exchange stories, materials, and perspectives.
+        </p>
+        <div class="outline-grid">
+          <div class="outline-item"><span>01</span><h3>Cultural exchange</h3><p>Promote sharing between people from different cultural backgrounds.</p></div>
+          <div class="outline-item"><span>02</span><h3>Break perception</h3><p>Challenge monocultural assumptions through visitor-to-visitor exchange.</p></div>
+          <div class="outline-item"><span>03</span><h3>New participation</h3><p>Use Give & Get as a different way to participate in the gallery.</p></div>
+          <div class="outline-item"><span>04</span><h3>AR archive</h3><p>Interact with TSG archives and visit a virtual TSG layer through AR.</p></div>
+        </div>
+      </div>
+
+      <div class="media-stage glass">
+        <div class="media-block media-main"><img src="https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2024-program/garden/1.jpg" alt="Tin Sheds Gallery exhibition reference"></div>
+        <div class="media-block media-small"><img src="https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2024-program/reverse/img_1640.jpg" alt="Tin Sheds Gallery installation reference"></div>
+        <div class="media-block media-note glass">
+          <h3>TSG context</h3>
+          <p>TSG is a physical contemporary exhibition space at USYD. Give & Get keeps the gallery, then adds a digital participation layer.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section split everyone-split" id="everyone">
+      <div class="panel">
+        <span class="eyebrow">TSG For Everyone / Application</span>
+        <h2>Website first, app after participation</h2>
+        <p>
+          The website introduces Give & Get on the existing TSG website: descriptions, participation instructions,
+          and online access to the items and stories shared by participants. The public can browse the archive;
+          people who participate can later join discussions in the app.
+        </p>
+        <form class="form-area" id="giveForm">
+          <label>
+            Item to Give
+            <input id="itemName" name="itemName" required placeholder="e.g. skirt, poster, reusable material">
+          </label>
+          <label>
+            Accompanying story
+            <textarea id="itemStory" name="itemStory" required placeholder="Upload the meaning, memory, or cultural story behind your item."></textarea>
+          </label>
+          <label>
+            How should it enter the service?
+            <select id="itemCategory" name="itemCategory">
+              <option>Public Give archive</option>
+              <option>Discussion bubble</option>
+              <option>DIY material</option>
+              <option>3D scan archive</option>
+            </select>
+          </label>
+          <button class="btn" type="submit">Add Give Story</button>
+        </form>
+      </div>
+
+      <div class="app-map glass" aria-label="Give and Get website service map">
+        <div class="app-node visual-node"><img src="https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/tea,-time---tim-tams/website_hk.jpg" alt=""><b>Definition</b><p>Understand Give & Get before visiting.</p></div>
+        <div class="app-node visual-node"><img src="https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/pressure/tinsheds-photo---pressure-banner---cropped.jpg" alt=""><b>Form</b><p>Upload item photo and story.</p></div>
+        <div class="app-node visual-node"><img src="https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2024-program/reverse/img_1640.jpg" alt=""><b>Archive</b><p>Browse exhibition and Give records.</p></div>
+        <div class="app-node visual-node"><img src="https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/120bpm/3.jpg" alt=""><b>Bubble</b><p>Read short public responses.</p></div>
+        <div class="app-node visual-node"><img src="https://www.sydney.edu.au/content/dam/art-and-culture/installations/vivid.jpg" alt=""><b>Member</b><p>Join app discussion after participating.</p></div>
+      </div>
+    </section>
+
+    <section class="section split" id="archive">
+      <div class="panel">
+        <span class="eyebrow">Archive display method</span>
+        <h2>Donations, exhibitions, archives, bubbles</h2>
+        <p>
+          The archive should show four related layers: existing TSG exhibitions, donated Give & Get items,
+          previous TSG archives, and bubble discussions. The browsing experience is visual, so people can
+          move between objects, exhibition images, and comments instead of reading a flat database.
+        </p>
+        <p>
+          Example from TSG: <i>Sydney Buries its Past</i> brought Tin Sheds Archive material from 1972-1994
+          into dialogue with contemporary works. In Give & Get, this becomes a model for connecting past
+          exhibition memory with visitor-donated stories.
+        </p>
+        <figure class="archive-example">
+          <img src="https://www.sydney.edu.au/content/dam/art-and-culture/galleries/_48a7704.jpg" alt="Sydney Buries its Past installation wall">
+          <figcaption>Sydney Buries its Past installation shot: archival posters become a visual memory wall for future Give & Get archives.</figcaption>
+        </figure>
+      </div>
+      <div class="archive-stage glass">
+        <div class="archive-story-panel" aria-label="Archive story examples">
+          <article class="archive-story">
+            <b>Archive Layer</b>
+            <small>Give & Get system</small>
+            <p>Official exhibitions stay at the top, then visitor objects, comments, and future scanned works connect beneath them.</p>
+          </article>
+          <article class="archive-story">
+            <b>in our own place space time and design</b>
+            <small>Apr 22 - May 29, 2026</small>
+            <p>A poetic archive of Country, water, city concrete, design, belonging, and shared stories across the Sydney basin.</p>
+          </article>
+          <article class="archive-story">
+            <b>PICA ERASED</b>
+            <small>Aug 6 - Sep 18, 2026</small>
+            <p>A revived 168-year-old strikethrough typeface questions bureaucratic writing, colonial documents, refusal, and redress.</p>
+          </article>
+        </div>
+        <div class="archive-image arch-a"><img src="https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2024-program/reverse/img_1640.jpg" alt="TSG exhibition image"></div>
+        <div class="archive-image arch-b"><img src="https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/pica-erased/pica-erased-web-banner-2.jpg" alt="PICA ERASED exhibition image"></div>
+        <div class="archive-image arch-c"><img src="assets/donation-bubbles.png" alt="Donation bubbles app visual"></div>
+        <div class="archive-image arch-d"><img src="https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/spectral-dialogues/banner-image_1.jpg" alt="Spectral Dialogues exhibition image"></div>
+        <div class="archive-image arch-e"><img src="https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/120bpm/3.jpg" alt="120 BPM exhibition image"></div>
+        <div class="archive-bubble bubble-top"><b>Exhibition</b><p>Current and past TSG exhibitions remain the anchor.</p></div>
+        <div class="archive-bubble bubble-bottom"><b>Give Archive</b><p>Donated items enrich the cultural atmosphere of future TSG.</p></div>
+        <div class="archive-focus">
+          <img src="https://www.sydney.edu.au/content/dam/art-and-culture/galleries/_48a7704.jpg" alt="Tin Sheds poster archive wall">
+          <b>Sydney Buries its Past</b>
+          <p>Hover the archive field to separate official exhibition memory, visitor stories, and future Give records.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="virtual">
+      <div class="panel">
+        <span class="eyebrow">Future Virtual TSG</span>
+        <h2>Sustainable archive gallery</h2>
+        <p>
+          This is our imagination and concept for Future TSG: a sustainable archive gallery where visitors bring reusable or recyclable materials as entry tickets. They can donate them or use them
+          to create DIY souvenirs. These works are 3D scanned, archived, shown online, and can be considered
+          for voting or future exhibitions.
+        </p>
+        <div class="virtual-grid">
+          <div class="virtual-step"><b>Preparation</b><p>Browse event guide and prepare item or recyclable material.</p></div>
+          <div class="virtual-step"><b>Entrance</b><p>Turn in item, redeem ticket, and receive Give & Get guidance.</p></div>
+          <div class="virtual-step"><b>Exhibition</b><p>Walk closer to works and trigger AR archive information.</p></div>
+          <div class="virtual-step"><b>DIY Area</b><p>Create with recyclable materials; take or leave the work.</p></div>
+          <div class="virtual-step"><b>Archive</b><p>3D scan DIY works and securely store them in the TSG archive.</p></div>
+        </div>
+        <div class="virtual-discussion" aria-label="Archive and donation discussion area">
+          <form class="discussion-form" id="virtualDiscussionForm">
+            <span class="eyebrow">Bubble discussion area</span>
+            <h3>Discuss an archive item</h3>
+            <div class="discussion-flow">
+              <label>
+                Exhibition category
+                <select id="discussionCategory" name="discussionCategory">
+                  <option>Current exhibition</option>
+                  <option>Archive exhibition</option>
+                  <option>Give donation</option>
+                </select>
+              </label>
+              <label>
+                Exhibition details
+                <select id="discussionExhibition" name="discussionExhibition"></select>
+              </label>
+              <label>
+                Specific work
+                <select id="discussionWork" name="discussionWork"></select>
+              </label>
+            </div>
+            <div class="visitor-compose">
+              <div class="visitor-fields">
+                <label>
+                  Visitor name
+                  <input id="discussionVisitorName" name="discussionVisitorName" placeholder="Visitor name">
+                </label>
+                <label>
+                  Visitor comment
+                  <textarea id="discussionText" name="discussionText" required placeholder="What would you like to say about this work?"></textarea>
+                </label>
+              </div>
+            </div>
+            <button class="btn" type="submit">Add Discussion</button>
+          </form>
+          <div class="discussion-preview" id="discussionPreview" data-work="120 BPM - Bring Your Friends"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section split" id="bubble">
+      <div class="panel">
+        <span class="eyebrow">Bubble discussion</span>
+        <h2>All sounds from past and now</h2>
+        <p>
+          Bubble records comments, reflections, and small emotional responses from visitors.
+          These voices sit beside the formal archive and help future audiences understand how people responded
+          to cultural objects, TSG archives, and Give & Get stories.
+        </p>
+        <p>
+          Example: after seeing the donated Aboriginal-pattern skirt in the app, one visitor might describe the
+          pattern as warm and familiar; another might ask how cultural symbols should be shared respectfully;
+          another might connect it to a community memory. These short comments become a softer public archive.
+        </p>
+        <div class="bubble-example-image">
+          <img src="https://cdn.pixabay.com/photo/2016/07/25/08/44/aboriginal-art-1540115_1280.jpg" alt="Aboriginal dot pattern example">
+        </div>
+      </div>
+      <div class="bubble-board glass" id="bubbleBoard">
+        <figure class="phone-shot"><img src="assets/comment.png" alt="Bubble discussion app screen"></figure>
+        <div class="comment-chip chip-1"><img src="https://i.pravatar.cc/80?img=5" alt=""><b>Mia Chen</b><p>This skirt pattern feels warm, personal, and touching.</p></div>
+        <div class="comment-chip chip-2"><img src="https://i.pravatar.cc/80?img=12" alt=""><b>Daniel Hart</b><p>How can we exchange culture without taking away its meaning?</p></div>
+        <div class="comment-chip chip-3"><img src="https://i.pravatar.cc/80?img=32" alt=""><b>Aisha Rahman</b><p>I used to see a similar pattern in a community festival.</p></div>
+        <div class="comment-chip chip-4"><img src="https://i.pravatar.cc/80?img=47" alt=""><b>Mei Tan</b><p>The story helps me read the object differently.</p></div>
+        <div class="comment-chip chip-5"><img src="https://i.pravatar.cc/80?img=25" alt=""><b>Luca Moretti</b><p>I want to respond with a digital collage instead of only writing.</p></div>
+        <div class="comment-chip chip-6"><img src="https://i.pravatar.cc/80?img=56" alt=""><b>Priya Singh</b><p>This could become part of a future TSG memory room.</p></div>
+        <div class="comment-chip chip-7"><img src="https://i.pravatar.cc/80?img=18" alt=""><b>Noah Williams</b><p>I would bring a family fabric sample.</p></div>
+        <div class="comment-chip chip-8"><img src="https://i.pravatar.cc/80?img=41" alt=""><b>Sofia Alvarez</b><p>The exchange makes the gallery feel more alive.</p></div>
+        <div class="comment-chip chip-9"><img src="https://i.pravatar.cc/80?img=8" alt=""><b>Hana Park</b><p>Can this story stay in the archive?</p></div>
+        <div class="comment-chip chip-10"><img src="https://i.pravatar.cc/80?img=61" alt=""><b>Oscar Nguyen</b><p>I want to hear the maker's voice too.</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="panel reflection">
+        <span class="eyebrow">Reflection</span>
+        <h2>Innovation with feasibility</h2>
+        <p>
+          The project originally imagined a completely new gallery and holographic screens, but this was too costly
+          for near-future TSG. The final direction retains TSG's internal and external spaces, then uses AR virtual
+          overlays and online archives to make the future service more feasible.
+        </p>
+        <a class="cta" href="#everyone">Continue exploring TSG <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Built from the Give & Get research and final project pages, with reference context from Tin Sheds Gallery and selected TSG past exhibition imagery.
+  </footer>
+
+  <script>
+    const root = document.documentElement;
+    const navLinks = Array.from(document.querySelectorAll(".links a"));
+    const sections = navLinks
+      .map((link) => document.querySelector(link.getAttribute("href")))
+      .filter(Boolean);
+    const paintCanvas = document.getElementById("paintCanvas");
+    const paintContext = paintCanvas.getContext("2d");
+    const splashes = [];
+    const paintColors = ["#ef4426", "#f97316", "#f8b400", "#0b7f45", "#0f7db8"];
+    let lastPaintTime = 0;
+
+    function resizePaintCanvas() {
+      const ratio = window.devicePixelRatio || 1;
+      paintCanvas.width = Math.ceil(window.innerWidth * ratio);
+      paintCanvas.height = Math.ceil(window.innerHeight * ratio);
+      paintCanvas.style.width = `${window.innerWidth}px`;
+      paintCanvas.style.height = `${window.innerHeight}px`;
+      paintContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+    }
+
+    function addPaintSplash(x, y, speed = 1) {
+      const color = paintColors[Math.floor(Math.random() * paintColors.length)];
+      const angle = Math.random() * Math.PI * 2;
+      const size = 10 + Math.random() * 20 + Math.min(speed, 40) * 0.12;
+      splashes.push({
+        x,
+        y,
+        color,
+        size,
+        angle,
+        life: 1,
+        blobs: Array.from({ length: 3 + Math.floor(Math.random() * 4) }, () => ({
+          angle: Math.random() * Math.PI * 2,
+          distance: Math.random() * 18,
+          radius: size * (0.28 + Math.random() * 0.42),
+          points: Array.from({ length: 10 }, () => 0.72 + Math.random() * 0.52)
+        })),
+        droplets: Array.from({ length: 6 + Math.floor(Math.random() * 7) }, () => ({
+          angle: Math.random() * Math.PI * 2,
+          distance: 14 + Math.random() * 54,
+          radius: 1.8 + Math.random() * 6.8,
+          highlight: Math.random() * 0.7 + 0.18
+        })),
+        streaks: Array.from({ length: 1 + Math.floor(Math.random() * 3) }, () => ({
+          angle: angle + (Math.random() - 0.5) * 1.3,
+          length: 22 + Math.random() * 54,
+          width: 0.8 + Math.random() * 1.7
+        }))
+      });
+      if (splashes.length > 34) splashes.splice(0, splashes.length - 34);
+    }
+
+    function drawPaint() {
+      paintContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      for (let index = splashes.length - 1; index >= 0; index -= 1) {
+        const splash = splashes[index];
+        paintContext.save();
+        paintContext.globalAlpha = Math.max(splash.life, 0) * 0.88;
+        paintContext.translate(splash.x, splash.y);
+        paintContext.rotate(splash.angle);
+
+        splash.blobs.forEach((blob) => {
+          const bx = Math.cos(blob.angle) * blob.distance;
+          const by = Math.sin(blob.angle) * blob.distance;
+          paintContext.save();
+          paintContext.translate(bx, by);
+          paintContext.rotate(blob.angle * 0.35);
+          paintContext.fillStyle = splash.color;
+          paintContext.beginPath();
+          blob.points.forEach((scale, pointIndex) => {
+            const pointAngle = (Math.PI * 2 * pointIndex) / blob.points.length;
+            const px = Math.cos(pointAngle) * blob.radius * scale;
+            const py = Math.sin(pointAngle) * blob.radius * scale;
+            if (pointIndex === 0) paintContext.moveTo(px, py);
+            else paintContext.lineTo(px, py);
+          });
+          paintContext.closePath();
+          paintContext.fill();
+
+          paintContext.globalAlpha *= 0.38;
+          paintContext.fillStyle = "rgba(255,255,255,0.58)";
+          paintContext.beginPath();
+          paintContext.arc(-blob.radius * 0.22, -blob.radius * 0.28, Math.max(1.2, blob.radius * 0.18), 0, Math.PI * 2);
+          paintContext.fill();
+          paintContext.restore();
+        });
+
+        splash.streaks.forEach((streak) => {
+          paintContext.save();
+          paintContext.rotate(streak.angle);
+          paintContext.strokeStyle = splash.color;
+          paintContext.lineWidth = streak.width;
+          paintContext.lineCap = "round";
+          paintContext.beginPath();
+          paintContext.moveTo(0, 0);
+          paintContext.quadraticCurveTo(streak.length * 0.42, -8, streak.length, 0);
+          paintContext.stroke();
+          paintContext.restore();
+        });
+
+        splash.droplets.forEach((drop) => {
+          const dx = Math.cos(drop.angle) * drop.distance;
+          const dy = Math.sin(drop.angle) * drop.distance;
+          paintContext.save();
+          paintContext.translate(dx, dy);
+
+          paintContext.fillStyle = splash.color;
+          paintContext.beginPath();
+          paintContext.arc(0, 0, drop.radius, 0, Math.PI * 2);
+          paintContext.fill();
+
+          paintContext.globalAlpha *= 0.32;
+          paintContext.fillStyle = "rgba(255,255,255,0.7)";
+          paintContext.beginPath();
+          paintContext.arc(-drop.radius * 0.32, -drop.radius * 0.36, Math.max(0.7, drop.radius * 0.22), 0, Math.PI * 2);
+          paintContext.fill();
+          paintContext.restore();
+        });
+
+        paintContext.restore();
+        splash.life -= 0.015;
+        splash.size += 0.08;
+        if (splash.life <= 0) splashes.splice(index, 1);
+      }
+      requestAnimationFrame(drawPaint);
+    }
+
+    resizePaintCanvas();
+    drawPaint();
+    window.addEventListener("resize", resizePaintCanvas);
+
+    const pointerState = {
+      x: window.innerWidth * 0.5,
+      y: window.innerHeight * 0.36,
+      reveal: 50
+    };
+    const smoothPointerState = { ...pointerState };
+
+    function animatePointerState() {
+      smoothPointerState.x += (pointerState.x - smoothPointerState.x) * 0.09;
+      smoothPointerState.y += (pointerState.y - smoothPointerState.y) * 0.09;
+      smoothPointerState.reveal += (pointerState.reveal - smoothPointerState.reveal) * 0.08;
+      root.style.setProperty("--smx", `${smoothPointerState.x}px`);
+      root.style.setProperty("--smy", `${smoothPointerState.y}px`);
+      root.style.setProperty("--sreveal", `${smoothPointerState.reveal}%`);
+      requestAnimationFrame(animatePointerState);
+    }
+
+    animatePointerState();
+
+    window.addEventListener("pointermove", (event) => {
+      pointerState.x = event.clientX;
+      pointerState.y = event.clientY;
+      pointerState.reveal = Math.round((event.clientX / window.innerWidth) * 100);
+      root.style.setProperty("--mx", `${event.clientX}px`);
+      root.style.setProperty("--my", `${event.clientY}px`);
+      root.style.setProperty("--reveal", `${pointerState.reveal}%`);
+      const now = performance.now();
+      if (now - lastPaintTime > 70) {
+        addPaintSplash(event.clientX, event.clientY, event.movementX * event.movementX + event.movementY * event.movementY);
+        lastPaintTime = now;
+      }
+    }, { passive: true });
+
+    function updateNav() {
+      const current = sections.reduce((active, section) => {
+        const rect = section.getBoundingClientRect();
+        return rect.top <= 120 ? section.id : active;
+      }, sections[0]?.id);
+
+      navLinks.forEach((link) => {
+        link.classList.toggle("active", link.getAttribute("href") === `#${current}`);
+      });
+    }
+
+    window.addEventListener("scroll", updateNav, { passive: true });
+    updateNav();
+
+    const form = document.getElementById("giveForm");
+    const bubbleBoard = document.getElementById("bubbleBoard");
+    const archiveStage = document.querySelector(".archive-stage");
+    const appMap = document.querySelector(".app-map");
+    const discussionForm = document.getElementById("virtualDiscussionForm");
+    const discussionCategory = document.getElementById("discussionCategory");
+    const discussionExhibition = document.getElementById("discussionExhibition");
+    const discussionWork = document.getElementById("discussionWork");
+    const discussionPreview = document.getElementById("discussionPreview");
+    const discussionVisitorName = document.getElementById("discussionVisitorName");
+    const discussionText = document.getElementById("discussionText");
+    let generatedAvatarIndex = 14;
+    let draggedCards = null;
+    let dragStartX = 0;
+    let dragStartScroll = 0;
+    let didDragCards = false;
+    const discussionData = {
+      "Current exhibition": {
+        "120 BPM - Bring Your Friends": {
+          "Bring Your Friends installation": {
+            images: [
+              {
+                src: "https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/120bpm/3.jpg",
+                title: "Bring Your Friends installation",
+                caption: "Colour, light, and social movement inside the gallery."
+              },
+              {
+                src: "https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/120bpm/1.jpg",
+                title: "120 BPM gallery space",
+                caption: "A bright installation environment for gathering."
+              },
+              {
+                src: "https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/120bpm/2.jpg",
+                title: "Projected work",
+                caption: "Moving image and scaffolded spatial layers."
+              }
+            ],
+            comments: [
+              { name: "Maya Li", avatar: "https://i.pravatar.cc/80?img=10", text: "The light makes the room feel like a shared pulse rather than a static exhibition." },
+              { name: "Ethan Brooks", avatar: "https://i.pravatar.cc/80?img=15", text: "I like how the installation asks people to move around it with friends." },
+              { name: "Nora Kim", avatar: "https://i.pravatar.cc/80?img=29", text: "This feels like the kind of archive that should keep sound, colour, and movement." }
+            ]
+          },
+          "Yellow scaffold room": {
+            images: [
+              {
+                src: "https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/120bpm/1.jpg",
+                title: "Yellow scaffold room",
+                caption: "A warm interior pathway through the exhibition."
+              },
+              {
+                src: "https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/120bpm/3.jpg",
+                title: "Colour field",
+                caption: "The work shifts from object to environment."
+              }
+            ],
+            comments: [
+              { name: "Sofia Alvarez", avatar: "https://i.pravatar.cc/80?img=41", text: "The yellow room makes the gallery feel warmer and less formal." },
+              { name: "Jonah Reed", avatar: "https://i.pravatar.cc/80?img=33", text: "It feels like walking through a temporary city inside TSG." },
+              { name: "Amelia Zhou", avatar: "https://i.pravatar.cc/80?img=23", text: "The structure could hold visitor stories as another layer." }
+            ]
+          },
+          "Projected screen": {
+            images: [
+              {
+                src: "https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/120bpm/2.jpg",
+                title: "Projected screen",
+                caption: "A screen-based work held inside the installation."
+              },
+              {
+                src: "https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/120bpm/1.jpg",
+                title: "Installation context",
+                caption: "The projection sits inside a larger social space."
+              }
+            ],
+            comments: [
+              { name: "Priya Singh", avatar: "https://i.pravatar.cc/80?img=56", text: "The projection makes the archive feel emotional, not just documentary." },
+              { name: "Leo Martin", avatar: "https://i.pravatar.cc/80?img=52", text: "I would want to hear what visitors say while watching this." },
+              { name: "Hana Park", avatar: "https://i.pravatar.cc/80?img=8", text: "The blur in the image feels like memory entering the room." }
+            ]
+          }
+        }
+      },
+      "Archive exhibition": {
+        "Sydney Buries its Past": {
+          "Poster archive wall": {
+            images: [
+              {
+                src: "https://www.sydney.edu.au/content/dam/art-and-culture/galleries/_48a7704.jpg",
+                title: "Poster archive wall",
+                caption: "Tin Sheds Archive material from 1972-1994."
+              }
+            ],
+            comments: [
+              { name: "Daniel Hart", avatar: "https://i.pravatar.cc/80?img=12", text: "This archive wall feels like a living timeline, not only a record." },
+              { name: "Mia Chen", avatar: "https://i.pravatar.cc/80?img=5", text: "I want to understand who made these posters and why they mattered." },
+              { name: "Oscar Nguyen", avatar: "https://i.pravatar.cc/80?img=61", text: "The Give objects could sit beside this as a new public memory layer." }
+            ]
+          }
+        },
+        "PICA ERASED": {
+          "Erased type work": {
+            images: [
+              {
+                src: "https://www.sydney.edu.au/content/dam/corporate/images/sydney-school-of-architecture-design-and-planning/about-the-school/tin-sheds-gallery/2026/pica-erased/pica-erased-web-banner-2.jpg",
+                title: "Erased type work",
+                caption: "A strikethrough typeface as critical archive."
+              }
+            ],
+            comments: [
+              { name: "Aisha Rahman", avatar: "https://i.pravatar.cc/80?img=32", text: "The crossed-out text makes refusal feel visible." },
+              { name: "Mei Tan", avatar: "https://i.pravatar.cc/80?img=47", text: "Official records can hide as much as they reveal." },
+              { name: "Noah Williams", avatar: "https://i.pravatar.cc/80?img=18", text: "A donated object could respond by carrying a counter-story." }
+            ]
+          }
+        }
+      },
+      "Give donation": {
+        "Give Archive donation": {
+          "Donated cultural object": {
+            images: [
+              {
+                src: "https://cdn.pixabay.com/photo/2016/07/25/08/44/aboriginal-art-1540115_1280.jpg",
+                title: "Donated cultural object",
+                caption: "A personal object entering the public Give archive."
+              }
+            ],
+            comments: [
+              { name: "Luca Moretti", avatar: "https://i.pravatar.cc/80?img=25", text: "The personal memory makes the object feel more generous." },
+              { name: "Hana Park", avatar: "https://i.pravatar.cc/80?img=8", text: "I like seeing why someone chose to give this item." },
+              { name: "Sofia Alvarez", avatar: "https://i.pravatar.cc/80?img=41", text: "This could become a conversation between families and strangers." }
+            ]
+          }
+        }
+      }
+    };
+    let frontLayer = 30;
+    let archiveFrontLayer = 35;
+    let appFrontLayer = 20;
+    let discussionFrontLayer = 25;
+
+    function bringVisitorToFront(chip) {
+      document.querySelectorAll(".comment-chip.is-front").forEach((item) => item.classList.remove("is-front"));
+      chip.classList.add("is-front");
+      chip.style.zIndex = String(++frontLayer);
+    }
+
+    function bringArchiveToFront(item) {
+      archiveStage.querySelectorAll(".archive-front").forEach((node) => node.classList.remove("archive-front"));
+      item.classList.add("archive-front");
+      item.style.zIndex = String(++archiveFrontLayer);
+    }
+
+    function bringAppNodeToFront(item) {
+      appMap.querySelectorAll(".app-front").forEach((node) => node.classList.remove("app-front"));
+      item.classList.add("app-front");
+      item.style.zIndex = String(++appFrontLayer);
+    }
+
+    function bringDiscussionNoteToFront(note) {
+      discussionPreview.querySelectorAll(".discussion-note.is-front").forEach((node) => node.classList.remove("is-front"));
+      note.classList.add("is-front");
+      note.style.zIndex = String(++discussionFrontLayer);
+    }
+
+    function selectedDiscussionEntry() {
+      return discussionData[discussionCategory.value][discussionExhibition.value][discussionWork.value];
+    }
+
+    function generateVisitorAvatar() {
+      generatedAvatarIndex = (generatedAvatarIndex % 70) + 1;
+      return `https://i.pravatar.cc/80?img=${generatedAvatarIndex}`;
+    }
+
+    function assignCommentPosition(comment, index = 0) {
+      if (comment.position) return comment.position;
+      const bands = [
+        { left: [6, 18], top: [42, 50] },
+        { left: [56, 70], top: [43, 52] },
+        { left: [29, 43], top: [52, 60] },
+        { left: [8, 22], top: [62, 72] },
+        { left: [50, 64], top: [63, 74] },
+        { left: [32, 46], top: [70, 78] }
+      ];
+      const band = bands[index % bands.length];
+      comment.position = {
+        left: band.left[0] + Math.random() * (band.left[1] - band.left[0]),
+        top: band.top[0] + Math.random() * (band.top[1] - band.top[0])
+      };
+      return comment.position;
+    }
+
+    function createRandomCommentPosition() {
+      return {
+        left: 8 + Math.random() * 58,
+        top: 42 + Math.random() * 34
+      };
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[character]));
+    }
+
+    function populateDiscussionExhibitions() {
+      discussionExhibition.innerHTML = "";
+      Object.keys(discussionData[discussionCategory.value]).forEach((name) => {
+        discussionExhibition.add(new Option(name, name));
+      });
+      populateDiscussionWorks();
+    }
+
+    function populateDiscussionWorks() {
+      discussionWork.innerHTML = "";
+      Object.keys(discussionData[discussionCategory.value][discussionExhibition.value]).forEach((name) => {
+        discussionWork.add(new Option(name, name));
+      });
+      renderDiscussionPreview();
+    }
+
+    function renderDiscussionPreview() {
+      const entry = selectedDiscussionEntry();
+      const work = discussionWork.value;
+      discussionPreview.innerHTML = "";
+      discussionPreview.dataset.work = `${discussionExhibition.value}: ${work}`;
+
+      const cards = document.createElement("div");
+      cards.className = "discussion-cards";
+      entry.images.forEach((image) => {
+        const card = document.createElement("article");
+        card.className = "discussion-card";
+        card.innerHTML = `<img src="${escapeHtml(image.src)}" alt=""><b>${escapeHtml(image.title)}</b><span>${escapeHtml(image.caption)}</span>`;
+        cards.appendChild(card);
+      });
+      discussionPreview.appendChild(cards);
+
+      entry.comments.slice(0, 6).forEach((comment, index) => {
+        const position = assignCommentPosition(comment, index);
+        const note = document.createElement("div");
+        note.className = `discussion-note note-${index + 1} positioned${comment.front ? " is-front" : ""}`;
+        note.style.setProperty("--note-left", `${position.left}%`);
+        note.style.setProperty("--note-top", `${position.top}%`);
+        if (comment.front) note.style.zIndex = String(++discussionFrontLayer);
+        note.dataset.index = String(index);
+        note.innerHTML = `
+          <img src="${escapeHtml(comment.avatar)}" alt="">
+          <b>${escapeHtml(comment.name)}</b>
+          <p>${escapeHtml(comment.text)}</p>
+        `;
+        discussionPreview.appendChild(note);
+      });
+    }
+
+    function activeDiscussionCards() {
+      return discussionPreview.querySelector(".discussion-cards");
+    }
+
+    appMap.addEventListener("click", (event) => {
+      const node = event.target.closest(".app-node");
+      if (!node || !appMap.contains(node)) return;
+      bringAppNodeToFront(node);
+    });
+
+    archiveStage.addEventListener("click", (event) => {
+      const item = event.target.closest(".archive-story, .archive-image, .archive-bubble, .archive-focus");
+      if (!item || !archiveStage.contains(item)) return;
+      bringArchiveToFront(item);
+    });
+
+    discussionCategory.addEventListener("change", populateDiscussionExhibitions);
+    discussionExhibition.addEventListener("change", populateDiscussionWorks);
+    discussionWork.addEventListener("change", renderDiscussionPreview);
+
+    discussionPreview.addEventListener("pointerdown", (event) => {
+      const cards = event.target.closest(".discussion-cards");
+      if (!cards) return;
+      draggedCards = cards;
+      dragStartX = event.clientX;
+      dragStartScroll = cards.scrollLeft;
+      didDragCards = false;
+      cards.classList.add("is-dragging");
+      cards.setPointerCapture?.(event.pointerId);
+    });
+
+    discussionPreview.addEventListener("pointermove", (event) => {
+      if (!draggedCards) return;
+      const delta = event.clientX - dragStartX;
+      if (Math.abs(delta) > 4) didDragCards = true;
+      draggedCards.scrollLeft = dragStartScroll - delta;
+    });
+
+    function stopDraggingCards(event) {
+      if (!draggedCards) return;
+      draggedCards.classList.remove("is-dragging");
+      draggedCards.releasePointerCapture?.(event.pointerId);
+      draggedCards = null;
+      window.setTimeout(() => {
+        didDragCards = false;
+      }, 0);
+    }
+
+    discussionPreview.addEventListener("pointerup", stopDraggingCards);
+    discussionPreview.addEventListener("pointercancel", stopDraggingCards);
+    discussionPreview.addEventListener("pointerleave", stopDraggingCards);
+
+    discussionPreview.addEventListener("click", (event) => {
+      const note = event.target.closest(".discussion-note");
+      if (!note || !discussionPreview.contains(note) || didDragCards) return;
+      bringDiscussionNoteToFront(note);
+    });
+
+    discussionForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = new FormData(discussionForm);
+      const category = String(data.get("discussionCategory"));
+      const exhibition = String(data.get("discussionExhibition"));
+      const work = String(data.get("discussionWork"));
+      const text = String(data.get("discussionText")).trim();
+      if (!text) return;
+      const entry = selectedDiscussionEntry();
+      entry.comments.forEach((comment) => {
+        comment.front = false;
+      });
+      entry.comments.unshift({
+        name: String(data.get("discussionVisitorName")).trim() || "Visitor",
+        avatar: generateVisitorAvatar(),
+        text,
+        position: createRandomCommentPosition(),
+        front: true
+      });
+      entry.comments = entry.comments.slice(0, 6);
+      discussionCategory.value = category;
+      populateDiscussionExhibitions();
+      discussionExhibition.value = exhibition;
+      populateDiscussionWorks();
+      discussionWork.value = work;
+      discussionVisitorName.value = "";
+      discussionText.value = "";
+      renderDiscussionPreview();
+    });
+
+    populateDiscussionExhibitions();
+
+    bubbleBoard.addEventListener("click", (event) => {
+      const chip = event.target.closest(".comment-chip");
+      if (!chip || !bubbleBoard.contains(chip)) return;
+      bringVisitorToFront(chip);
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const name = String(data.get("itemName")).trim();
+      const story = String(data.get("itemStory")).trim();
+      if (!name || !story) return;
+
+      const chip = document.createElement("div");
+      chip.className = "comment-chip";
+      chip.innerHTML = "<img alt=\"\"><b></b><p></p>";
+      chip.querySelector("img").src = `https://i.pravatar.cc/80?img=${Math.floor(1 + Math.random() * 60)}`;
+      chip.querySelector("b").textContent = name;
+      chip.querySelector("p").textContent = story;
+      chip.style.left = `${8 + Math.random() * 56}%`;
+      chip.style.top = `${12 + Math.random() * 58}%`;
+      bubbleBoard.appendChild(chip);
+      bringVisitorToFront(chip);
+      form.reset();
+      document.querySelector("#bubble").scrollIntoView({ behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>
